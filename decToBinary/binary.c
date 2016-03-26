@@ -10,13 +10,14 @@ Stack *p= create();
 
 int aux=0;
 double ptf = 0;
-double num;
-int pti,i,j,tam,tam2,prec = 0;
+double num = 0;
+int pti = 0,i,j,tam,tam2,prec = 0;
 int n = 2;
 int* resulti;
 int *frac;
 printf("informe o numero a ser convertido\n");
 scanf("%lf",&num);
+
 printf("informe a precisao fracionaria pra o numero\n");
 scanf("%d",&prec);
 //parte inteira
@@ -24,23 +25,24 @@ pti  = num;
 
 // parte fracionaria
 ptf = num - pti;
-
     int *bin = decToBin(p,pti,&tam);
+    for(i=0;i < tam;i++){
+       printf("%d",bin[i]);
+   	}
     if(prec < 0){
             printf("erro na parte fracionaria\n");    
     }
-    else if(ptf != 0){
+    else if(ptf > 0){
      frac = fracToBin(p,ptf,&tam2,prec);
      // fracToBin(p,ptf,&tam2,prec);
+  	printf(".");
+   	for(i=0;i < tam2;i++){
+       printf("%d",frac[i]);
+   	}
     }
     
-   for(i=0;i < tam;i++){
-       printf("%d",bin[i]);
-   }
-   printf(".");
-   for(i=0;i < tam2;i++){
-       printf("%d",frac[i]);
-   }
+   
+   
    printf("\n");
 
 return 0;    
