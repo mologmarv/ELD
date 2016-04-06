@@ -11,28 +11,23 @@ Stack *p= create();
 int aux=0;
 double ptf = 0;
 double num = 0;
-int pti = 0,i,j,tam,tam2,prec = 0;
+int pti = 0,i,j,tam,tam2,prec = 32;
 int n = 2;
 int* resulti;
 int *frac;
 printf("informe o numero a ser convertido\n");
 scanf("%lf",&num);
-
-printf("informe a precisao fracionaria pra o numero\n");
-scanf("%d",&prec);
 //parte inteira
 pti  = num;
 
 // parte fracionaria
 ptf = num - pti;
     int *bin = decToBin(p,pti,&tam);
+    printf("Precisao 32 bits\n");
     for(i=0;i < tam;i++){
        printf("%d",bin[i]);
    	}
-    if(prec < 0){
-            printf("erro na parte fracionaria\n");    
-    }
-    else if(ptf > 0){
+    if(ptf > 0){
      frac = fracToBin(p,ptf,&tam2,prec);
      // fracToBin(p,ptf,&tam2,prec);
   	printf(".");
@@ -69,7 +64,6 @@ int *decToBin(Stack *p,int bin,int *tam){
     e = (int*)malloc(sizeStack(p)*sizeof(int));
     *tam = sizeStack(p);
     z = sizeStack(p);
-    printf("%d\n",z);
         for(i = 0;i < z;i++){
             e[i] = pop(p);
         }
