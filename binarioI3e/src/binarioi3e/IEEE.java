@@ -5,6 +5,8 @@
  */
 package binarioi3e;
 
+import static com.sun.corba.se.impl.util.Utility.printStackTrace;
+import java.awt.Color;
 import java.util.Deque;
 import java.util.LinkedList;
 import java.util.Scanner;
@@ -26,8 +28,9 @@ public class IEEE {
      */
     
     public static void main(String[] args) {
-        Double numero;
+        Double numero = null;
         int partdec;
+        String tmp;
         Double partfrac;
         String[] temp2;
         Integer sinal;
@@ -42,7 +45,14 @@ public class IEEE {
         Scanner entrada = new Scanner(System.in);
         
         System.out.println("Informe o numero no seguinte formato  0,0000");
-        numero = entrada.nextDouble();
+        tmp = entrada.next();
+                System.out.println(tmp);
+                tmp = tmp.replaceAll(",", ".");
+                try {
+                    numero = Double.parseDouble(tmp);                   
+                } catch (Exception e) {
+                    printStackTrace();
+                }
         if(numero < 0){
             sinal = 1;
             numero = numero*-1;

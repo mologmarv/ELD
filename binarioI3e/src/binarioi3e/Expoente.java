@@ -15,15 +15,18 @@ public class Expoente {
    private double numero;
    int expoent;
    private int excesso = 127;
-   private double nfrac;
-    
+   private double nfrac; 
    
    public int getExpoent(){
        int num = 0;
        int check;
+       int intIs;
        double temp = numero;
        Extrator converter = new Extrator();
-       if(temp >= 1){
+       converter.setNumero(temp);
+       intIs = converter.toInt();
+       
+       if(temp > 2){
         while(num != 1){
           temp = temp/2;
           converter.setNumero(temp);
@@ -34,7 +37,15 @@ public class Expoente {
           expoent++;  
         }
        }
-       else if(temp < 1){
+       else if((intIs == 1)){
+          setNfrac(temp-1);
+          return excesso; 
+       }
+       else if((intIs == 0)){
+          setNfrac(temp);
+          return 0; 
+       }
+       else if((temp < -2)){
          while(num != 1){
           temp = temp*2;
           converter.setNumero(temp);
