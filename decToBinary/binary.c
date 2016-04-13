@@ -3,7 +3,7 @@
 #include "lib.h"
 
 int *decToBin(Stack *p,int bin,int *tam);
-int *fracToBin(Stack *p,double bin,int *tam);
+int *fracToBin(Stack *p,double bin,int *tam,int prec);
 
 int main(){
 Stack *p= create();
@@ -11,34 +11,29 @@ Stack *p= create();
 int aux=0;
 double ptf = 0;
 double num = 0;
-int pti = 0,i,j,tam,tam2;
+int pti = 0,i,j,tam,tam2,prec = 32;
 int n = 2;
 int* resulti;
 int *frac;
 printf("informe o numero a ser convertido\n");
 scanf("%lf",&num);
-printf("Precisao 32 bits\n");
-if (num < 0) {
-   printf("- ");
-   num = num * (-1);
-}
 //parte inteira
 pti  = num;
 
 // parte fracionaria
 ptf = num - pti;
-
     int *bin = decToBin(p,pti,&tam);
+    printf("Precisao 32 bits\n");
     for(i=0;i < tam;i++){
        printf("%d",bin[i]);
    	}
     if(ptf > 0){
-     frac = fracToBin(p,ptf,&tam2);
+     frac = fracToBin(p,ptf,&tam2,prec);
      // fracToBin(p,ptf,&tam2,prec);
   	printf(".");
-	   	for(i=0;i < tam2;i++){
-	       printf("%d",frac[i]);
-	   	}
+   	for(i=0;i < tam2;i++){
+       printf("%d",frac[i]);
+   	}
     }
     
    
@@ -51,6 +46,8 @@ return 0;
 int *decToBin(Stack *p,int bin,int *tam){
     int rest,i,z;
     int *e;
+    rest = bin%2;
+    push(p, rest);
     
     if(bin == 0){
       e = (int*)malloc(2*sizeof(int));
@@ -59,10 +56,10 @@ int *decToBin(Stack *p,int bin,int *tam){
       return e;
     }
     
-    while(bin > 0){
+    while(bin != 1){
+        bin = bin/2;
         rest = bin%2;
         push(p, rest);
-        bin = bin/2;
     }
     e = (int*)malloc(sizeStack(p)*sizeof(int));
     *tam = sizeStack(p);
@@ -73,30 +70,32 @@ int *decToBin(Stack *p,int bin,int *tam){
     return e;
 }
 
-int *fracToBin(Stack *p,double bin,int *tam){
+int *fracToBin(Stack *p,double bin,int *tam,int prec){
 double result;
 result = bin;
-int z = 32;
-int i = 0;
-int j = 31;
-int aux;
+int z = prec;
+int i = prec-1;
+
+
     while(z > 0){    
         result = result*2;
         if(result >= 1){
             push(p,1);
             result = result - 1;
         }
+        else if(result < 0){
+            push(p,0);
+        }
         else{
             push(p,0);
         }
         z--;    
     }
-    aux = (sizeStack(p));
-    int *temp = (int*) malloc(aux*sizeof(int));
+    int *temp = (int*)malloc(sizeStack(p)*sizeof(int));
     *tam = sizeStack(p);
-    for(i=0;i<aux;i++){
-        temp[j] = pop(p);
-        j--;
+    while(i != 0){
+        temp[i] = pop(p);
+        i--;
     }
     return temp;
 }
